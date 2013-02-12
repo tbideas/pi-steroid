@@ -1,0 +1,10 @@
+{
+  "name": "pi-steroid",
+  "description": "A Raspberry Pi client for Asteroid connected objects framework",
+  "author": "Thomas Sarlandie <thomas@sarlandie.net>", 
+  "version": "0.0.1",
+  "dependencies": {
+    "ddp": "git://github.com/sarfata/node-ddp-client#master",
+    "underscore": "1.4.x"
+  }
+}
