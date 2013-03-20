@@ -4,7 +4,7 @@
   "author": "Thomas Sarlandie <thomas@sarlandie.net>", 
   "version": "0.0.1",
   "dependencies": {
-    "ddp": "git://github.com/sarfata/node-ddp-client#master",
+    "ddp": "0.3.0",
     "underscore": "1.4.x"
   }
 }

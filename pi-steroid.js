@@ -5,54 +5,43 @@ var util = require("util"),
 		child_process = require('child_process'),
     _ = require("underscore");
 		DDPClient = require("ddp");
-		
+
 var host = process.argv[2] || "127.0.0.1";
 var port = process.argv[3] || 3000;
 
 var ddpclient = new DDPClient({ 'host': host, 'port': port});
 
-ddpclient.onMessage(function(msg) {
-//	console.log("ddp message: " + msg);
-});	
-
-ddpclient.onClose(function(code, message) {
-	console.log("Close: [%s] %s", code, message);
-	connect();
-});
-ddpclient.onError(function(error) {
-	console.log("Error: %s", error);
-	connect();
+ddpclient.on('message', function(msg) {
+	console.log("ddp message: " + msg);
 });
 
 var token;
 
 getUniqueToken(function(aToken) {
-	token = aToken;
-	connect();
+  token = aToken;
+
+  ddpclient.connect(function() {
+  	console.log("Connected - my token: %s", token);
+
+  	var bundle = require('./package.json');
+  	ddpclient.call('register', [token, bundle.name, bundle.version],
+  	  function(err, result) {
+  		  console.log('Register result: %j (err: %j)', result, err);
+  	  }
+  	);
+
+  	ddpclient.subscribe('device-code', [aToken], function() {
+  		var snippets = ddpclient.collections.codes;
+  		if (!snippets || snippets.length == 0) {
+  			console.log("No code for me right now.");
+  		}
+  		else {
+  			console.log("Running code");
+  			runCode(snippets[Object.keys(snippets)[0]].code);
+  		}
+    });
+  });
 });
-
-
-function connect() {
-	ddpclient.connect(function() {
-		console.log("Connected - my token: %s", token);
-
-		var bundle = require('./package.json');
-		ddpclient.call('register', [token, bundle.name, bundle.version], function(err, result) {
-			console.log('called function - err: %j result: %j', err, result);
-		});
-
-		ddpclient.subscribe('code', [], function() {
-			var snippets = ddpclient.collections.code;
-			if (snippets == 0) {
-				console.log("No code for me right now.");
-			}
-			else {
-				console.log("Running code");
-				runCode(snippets[Object.keys(snippets)[0]].code);
-			}
-		});
-	});
-}
 
 
 var intervals = [];
@@ -91,7 +80,7 @@ function getUniqueToken(cb) {
 		for (var i = 0; !found && i < devs.length; i++) {
 			dev = devs[i];
 			var fn = path.join('/sys/class/net', dev, 'address');
-      if(dev.substr(0, 3) == 'eth' && fs.existsSync(fn)) { 
+      if(dev.substr(0, 3) == 'eth' && fs.existsSync(fn)) {
 	      macs[dev] = fs.readFileSync(fn).toString().trim();
 				cb(macs[dev]);
 				found = true;
