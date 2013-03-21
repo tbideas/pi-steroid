@@ -1,10 +1,24 @@
 {
   "name": "pi-steroid",
   "description": "A Raspberry Pi client for Asteroid connected objects framework",
-  "author": "Thomas Sarlandie <thomas@sarlandie.net>", 
+  "author": "Thomas Sarlandie <thomas@sarlandie.net>",
   "version": "0.0.1",
   "dependencies": {
     "ddp": "0.3.0",
     "underscore": "1.4.x"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tbideas/pi-steroid.git"
+  },
+  "bugs": {
+    "url" : "https://github.com/tbideas/pi-steroid/issues"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "bin": {
+    "pi-steroid": "./pi-steroid.js"
+  },
+  "licence": "MIT"
 }

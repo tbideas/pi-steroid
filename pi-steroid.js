@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var util = require("util"),
     path = require('path'),
     fs = require('fs'),
@@ -6,8 +8,15 @@ var util = require("util"),
     _ = require("underscore");
     DDPClient = require("ddp");
 
-var host = process.argv[2] || "127.0.0.1";
-var port = process.argv[3] || 3000;
+
+var host = process.argv[2];
+var port = process.argv[3] || 80;
+
+if (!host) {
+  console.log("pi-steroid <server> [port]");
+  console.log("\n Example:\n  pi-steroid www.pijs.io");
+  process.exit(-1);
+}
 
 var ddpclient = new DDPClient({ 'host': host, 'port': port});
 
@@ -19,6 +28,12 @@ ddpclient.on('message', function(msg) {
     runCode(msg.fields.code);
   }
 });
+ddpclient.on('socket-close', function(code, message) {
+  console.log("Socket closed: %s %s", code, message);
+});
+ddpclient.on('socket-error', function(error) {
+  console.log("Socket error: %s", error);
+})
 
 var token;
 
