@@ -83,7 +83,6 @@ function runCode(snippet) {
   }
   try {
     sandbox = {
-      'piblaster': require("pi-blaster.js"),
       'util': require("util"),
       'setInterval': function (cb, timeout) {
         intervals.push(setInterval(cb, timeout));
