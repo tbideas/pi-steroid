@@ -2,11 +2,11 @@
 
 var util = require("util"),
     path = require('path'),
-    fs = require('fs'),
     vm = require("vm"),
-    child_process = require('child_process'),
     _ = require("underscore");
     DDPClient = require("ddp");
+
+var MacAddress = require("./lib/mac_address.js");
 
 
 var host = process.argv[2];
@@ -35,16 +35,16 @@ ddpclient.on('socket-error', function(error) {
   console.log("Socket error: %s", error);
 })
 
-var token;
+var myToken;
 
-getUniqueToken(function(aToken) {
-  token = aToken;
+MacAddress.getMacAddress(function(aToken) {
+  myToken = aToken;
 
   ddpclient.connect(function() {
-    console.log("Connected - my token: %s", token);
+    console.log("Connected - my token: %s", myToken);
 
     var bundle = require('./package.json');
-    ddpclient.call('register', [token, bundle.name, bundle.version],
+    ddpclient.call('register', [myToken, bundle.name, bundle.version],
       function(err, result) {
         if (!result) {
           console.log('Register result: %j (err: %j)', result, err);
@@ -93,52 +93,5 @@ function runCode(snippet) {
   }
   catch (e) {
     console.log("Error occured parsing script: " + util.inspect(e));
-  }
-}
-
-function getUniqueToken(cb) {
-  try {
-    var devs = fs.readdirSync('/sys/class/net/');
-    var macs = {};
-
-    // do something to stop when we find
-    var found = false;
-    for (var i = 0; !found && i < devs.length; i++) {
-      dev = devs[i];
-      var fn = path.join('/sys/class/net', dev, 'address');
-      if(dev.substr(0, 3) == 'eth' && fs.existsSync(fn)) {
-        macs[dev] = fs.readFileSync(fn).toString().trim();
-        cb(macs[dev]);
-        found = true;
-      }
-    }
-    if (found) return;
-  }
-  catch (err) {
-    //console.log("reading mac in /sys/class/net error: " + err);
-  }
-
-  try {
-    child_process.exec('ifconfig', function(error, stdout, stderr) {
-      var found = false;
-      var re = new RegExp(/ether (.*)/);
-      var lines = stdout.toString().split('\n');
-      for (var i = 0; !found && i < lines.length; i++) {
-        var line = lines[i];
-        if (m = line.match(re)) {
-          found = true;
-          cb(m[1]);
-        }
-      }
-      if (!found) {
-        console.log("Unable to get a unique token on this computer.");
-        process.exit(-1);
-      }
-    });
-  }
-  catch (err) {
-    console.log("ifconfig error: " + err);
-    console.log("Unable to get a unique token on this computer.");
-    process.exit(-1);
   }
 }
