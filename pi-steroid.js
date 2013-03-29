@@ -12,7 +12,7 @@ program
       .option('-v, --verbose', 'Enable verbose mode')
       .parse(process.argv);
 
-var host = program.server || "pijs.io";
+var server = program.server || "pijs.io";
 var port = program.port || 80;
 
 MacAddress.getMacAddress(function(macAddress) {
@@ -22,7 +22,7 @@ MacAddress.getMacAddress(function(macAddress) {
   }
 
   var client = new AsteroidClient({
-    'host': host,
+    'host': server,
     'port': port,
     'verbose': program.verbose || false,
     'token': macAddress
