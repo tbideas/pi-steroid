@@ -25,7 +25,8 @@ MacAddress.getMacAddress(function(macAddress) {
     'host': server,
     'port': port,
     'verbose': program.verbose || false,
-    'token': macAddress
+    'token': macAddress,
+    'extraNodePath': '/usr/local/lib/node_modules'
   });
   client.connect();
 });

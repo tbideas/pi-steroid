@@ -6,7 +6,11 @@
   "dependencies": {
     "ddp": "0.3.0",
     "underscore": "1.4.x",
-    "commander": "1.1.x"
+    "commander": "1.1.x",
+    "temp": "0.5.x"
+  },
+  "devDependencies": {
+    "chai": "1.5.x"
   },
   "repository": {
     "type": "git",
