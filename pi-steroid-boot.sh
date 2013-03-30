@@ -30,8 +30,6 @@ FOREVER=/usr/local/bin/forever
 
 case "$1" in
   start)
-    echo "piJS.io: Checking and installing updates for pi-steroid ..."
-    npm -g update pi-steroid
     echo "piJS.io: Launching pi-steroid"
     $FOREVER start $DAEMON $DAEMON_ARGS
   ;;
@@ -45,12 +43,16 @@ case "$1" in
     echo "piJS.io: Checking and installing updates for pi-steroid ..."
     npm -g update pi-steroid
   ;;
+  updategit)
+    echo "piJS.io: Installing latest development snapshot from Git repository"
+    npm -g install git://github.com/tbideas/pi-steroid.git
+  ;;
   logs)
-    $FOREVER logs
+    $FOREVER logs 0
   ;;
 
   *)
-  echo "Usage: $SCRIPTNAME {start|stop|update|logs}" >&2
+  echo "Usage: $SCRIPTNAME {start|stop|update|updategit|logs}" >&2
   exit 3
   ;;
 esac
