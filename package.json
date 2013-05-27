@@ -2,7 +2,7 @@
   "name": "pi-steroid",
   "description": "A Raspberry Pi client for Asteroid connected objects framework",
   "author": "Thomas Sarlandie <thomas@sarlandie.net>",
-  "version": "0.0.3-beta",
+  "version": "0.0.3",
   "dependencies": {
     "ddp": "git://github.com/oortcloud/node-ddp-client.git#error-notopened",
     "underscore": "1.4.x",
