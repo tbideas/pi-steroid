@@ -15,5 +15,5 @@ describe('AsteroidClient', function() {
       var client = new AsteroidClient();
       client.connect();
     });
-  })
+  });
 });
