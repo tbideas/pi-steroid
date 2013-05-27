@@ -13,7 +13,7 @@
 # Author: Thomas Sarlandie <thomas@sarlandie.net>
 # Heavily relies on npm module forever to daemonize/kill node scripts
 
-PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin
+PATH=/usr/local/bin:/sbin:/usr/sbin:/bin:/usr/bin
 DESC="Client for pijs.io cloud platform"
 NAME=pi-steroid
 DAEMON=/usr/local/bin/$NAME
