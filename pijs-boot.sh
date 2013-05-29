@@ -1,13 +1,13 @@
 #! /bin/sh
 ### BEGIN INIT INFO
-# Provides:          pi-steroid
+# Provides:          pijs
 # Required-Start:    $remote_fs $syslog
 # Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Connects to the piJS.io cloud platform
+# Short-Description: Connects to the pijs.io cloud platform
 # Description:       This daemon will connect to pijs.io, download and execute
-#                    code. Connect to pijs.io to program your device.
+#                    code. Go to www.pijs.io to program your device.
 ### END INIT INFO
 
 # Author: Thomas Sarlandie <thomas@sarlandie.net>
@@ -15,12 +15,12 @@
 
 PATH=/usr/local/bin:/sbin:/usr/sbin:/bin:/usr/bin
 
-NAME=pi-steroid
+NAME=pijs
 SCRIPTNAME=/etc/init.d/$NAME
 DESC="Client for pijs.io cloud platform"
 
-DAEMON=/usr/local/bin/$NAME
-DAEMON_ARGS="-s pijs.io -p 80"
+DAEMON=/usr/local/bin/pi-steroid
+DAEMON_ARGS="-s www.pijs.io -p 80"
 
 USER=pi
 LOGS=/var/log/pijs

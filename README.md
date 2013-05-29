@@ -1,9 +1,7 @@
 pi-steroid
 ##########
 
-pi-steroid is a client for the [Asteroid framework][asteroid].
-
-Check out [pijs.io][pijs] for an hosted version of asteroid.
+pi-steroid is a client for [Asteroid][asteroid] aka [pijs.io][pijs], a cloud framework for JavaScript development and deployment on the Raspberry Pi.
 
 ## What does it do?
 
@@ -11,16 +9,16 @@ pi-steroid runs on your Raspberry Pi and connects it to an [asteroid] server. On
 
 ## How to install?
 
-The easiest way to install pi-steroid on a Raspberry Pi is to use the auto-installation script described in [pijs.io documentation][pijs].
+The easiest way to install pi-steroid on a Raspberry Pi is to use the auto-installation script described in [pijs.io documentation][pijsdoc].
 
-You can also try pi-steroid on any computer that has nodejs and npm installed. Just install this package and run pi-steroid.js:
+You can also try pi-steroid on any computer that has nodejs and npm installed. Just install this package and run pijs-client:
 
-    npm install pi-steroid
-    pi-steroid
+    $ sudo npm install -g pi-steroid
+    $ pi-steroid
 
 ## How does it work?
 
-pi-steroid uses the node-ddp-client library to connect to an asteroid server. It subscribes to a feed from the server that describes this device and the code it is supposed to run.
+pi-steroid uses the [node-ddp-client][node-ddp-client] library to connect to an asteroid server. It subscribes to a feed from the server that describes this device and the code it is supposed to run.
 
 ## Author
 
@@ -40,3 +38,5 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 [asteroid]: http://github.com/tbideas/asteroid/
 [pijs]: http://www.pijs.io/
+[pijsdoc]: http://pijs.io/gettingstarted
+[node-ddp-client]: http://github.com/oortcloud/node-ddp-client

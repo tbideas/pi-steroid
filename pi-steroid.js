@@ -12,7 +12,7 @@ program
       .option('-v, --verbose', 'Enable verbose mode')
       .parse(process.argv);
 
-var server = program.server || "pijs.io";
+var server = program.server || "www.pijs.io";
 var port = program.port || 80;
 
 MacAddress.getMacAddress(function(macAddress) {
