@@ -12,21 +12,24 @@ program
       .option('-v, --verbose', 'Enable verbose mode')
       .parse(process.argv);
 
-var server = program.server || "www.pijs.io";
-var port = program.port || 80;
-
 MacAddress.getMacAddress(function(macAddress) {
   if (!macAddress) {
     console.error("Unable to start without a valid token to identify myself (mac address not found).");
     process.exit(-1);
   }
 
-  var client = new AsteroidClient({
-    'host': server,
-    'port': port,
+  var opts = {
     'verbose': program.verbose || false,
     'token': macAddress,
     'extraNodePath': '/usr/local/lib/node_modules'
-  });
+  };
+  if (program.server) {
+    opts.host = program.server;
+  }
+  if (program.port) {
+    opts.port = program.port;
+  }
+
+  var client = new AsteroidClient(opts);
   client.connect();
 });
