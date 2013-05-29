@@ -60,12 +60,12 @@ case "$1" in
   update)
     echo "pijs.io: Checking for and installing updates ..."
     npm -g update pi-steroid
-    su - $USER -c $FOREVER restartall
+    su - $USER -c "$FOREVER restart $FOREVER_ARGS $DAEMON"
   ;;
   updategit)
     echo "pijs.io: Installing latest development snapshot from Git repository"
     npm -g install git://github.com/tbideas/pi-steroid.git
-    su - $USER -c $FOREVER restartall
+    su - $USER -c "$FOREVER restart $FOREVER_ARGS $DAEMON"
   ;;
   logs)
     tail $LOGS/pijs.log 
