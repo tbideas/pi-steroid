@@ -20,7 +20,7 @@ SCRIPTNAME=/etc/init.d/$NAME
 DESC="Client for pijs.io cloud platform"
 
 DAEMON=/usr/local/bin/pi-steroid
-DAEMON_ARGS="-s www.pijs.io -p 80"
+DAEMON_ARGS=""
 
 USER=pi
 LOGS=/var/log/pijs
