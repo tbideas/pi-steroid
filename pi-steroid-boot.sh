@@ -13,14 +13,20 @@
 # Author: Thomas Sarlandie <thomas@sarlandie.net>
 # Heavily relies on npm module forever to daemonize/kill node scripts
 
-PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin
-DESC="Client for pijs.io cloud platform"
+PATH=/usr/local/bin:/sbin:/usr/sbin:/bin:/usr/bin
+
 NAME=pi-steroid
+SCRIPTNAME=/etc/init.d/$NAME
+DESC="Client for pijs.io cloud platform"
+
 DAEMON=/usr/local/bin/$NAME
 DAEMON_ARGS="-s pijs.io -p 80"
-SCRIPTNAME=/etc/init.d/$NAME
-FOREVER=/usr/local/bin/forever
 
+USER=pi
+LOGS=/var/log/pijs
+
+FOREVER=/usr/local/bin/forever
+FOREVER_ARGS="-a -p $LOGS -l $LOGS/pijs.log"
 
 # Exit if the package is not installed
 [ -x "$DAEMON" ] || exit 0
@@ -28,31 +34,45 @@ FOREVER=/usr/local/bin/forever
 # Exit if forever is not installed
 [ -x $FOREVER ] || exit 0
 
+# Create logs directory and setup owner.
+if [ ! -d $LOGS ]
+then
+  mkdir -p $LOGS
+  chown $USER $LOGS
+fi
+
 case "$1" in
   start)
-    echo "piJS.io: Launching pi-steroid"
-    $FOREVER start $DAEMON $DAEMON_ARGS
+    echo "pijs.io: Launching client ..."
+    su - $USER -c "$FOREVER start $FOREVER_ARGS $DAEMON $DAEMON_ARGS"
   ;;
   stop)
-    $FOREVER stop $DAEMON
+    echo "pijs.io: Stopping client ..."
+    su - $USER -c "$FOREVER stop $FOREVER_ARGS $DAEMON"
+  ;;
+  restart)
+    echo "pijs.io: Restarting client ..."
+    su - $USER -c "$FOREVER restart $FOREVER_ARGS $DAEMON"
   ;;
   status)
-    $FOREVER list
+    su - $USER -c "$FOREVER list $FOREVER_ARGS"
   ;;
   update)
-    echo "piJS.io: Checking and installing updates for pi-steroid ..."
+    echo "pijs.io: Checking for and installing updates ..."
     npm -g update pi-steroid
+    su - $USER -c $FOREVER restartall
   ;;
   updategit)
-    echo "piJS.io: Installing latest development snapshot from Git repository"
+    echo "pijs.io: Installing latest development snapshot from Git repository"
     npm -g install git://github.com/tbideas/pi-steroid.git
+    su - $USER -c $FOREVER restartall
   ;;
   logs)
-    $FOREVER logs 0
+    tail $LOGS/pijs.log 
   ;;
 
   *)
-  echo "Usage: $SCRIPTNAME {start|stop|update|updategit|logs}" >&2
+  echo "Usage: $SCRIPTNAME {start|stop|status|update|updategit|logs}" >&2
   exit 3
   ;;
 esac
