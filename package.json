@@ -1,10 +1,10 @@
 {
   "name": "pi-steroid",
-  "description": "A Raspberry Pi client for Asteroid connected objects framework",
+  "description": "A Raspberry Pi client for Asteroid (aka pijs.io) written in nodejs",
   "author": "Thomas Sarlandie <thomas@sarlandie.net>",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "dependencies": {
-    "ddp": "git://github.com/oortcloud/node-ddp-client.git#error-notopened",
+    "ddp": "0.3.3",
     "underscore": "1.4.x",
     "commander": "1.1.x",
     "temp": "0.5.x"
