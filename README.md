@@ -23,6 +23,7 @@ pi-steroid uses the [node-ddp-client][node-ddp-client] library to connect to an 
 ## Author
 
  * Thomas Sarlandie - @sarfata
+ * Seif Kobrosly - @skobrosly
 
 ## License
 
