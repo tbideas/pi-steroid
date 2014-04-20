@@ -2,7 +2,7 @@
   "name": "pi-steroid",
   "description": "A Raspberry Pi client for Asteroid (aka pijs.io) written in nodejs",
   "author": "Thomas Sarlandie <thomas@sarlandie.net>",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "dependencies": {
     "ddp": "0.3.3",
     "underscore": "1.4.x",
